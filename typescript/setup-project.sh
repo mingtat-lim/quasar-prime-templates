@@ -96,7 +96,9 @@ echo "console.log('Hello, TypeScript!');" > src/index.ts
 
 # Add script commands to package.json
 cat package.json | jq '.scripts += {
+  "checkin": "git add . && git commit -m 'daily commit' -S && git push",
   "lint": "eslint \"src/**/*.ts\"",
+  "lint-fix": "eslint --fix \"src/**/*.ts\"",
   "format": "prettier --write \"**/*.{ts,js,json,css,scss,md}\"",
   "build": "tsc",
   "start": "node dist/index.js",
@@ -136,5 +138,8 @@ EOM
 
 # format source code...
 npm run format
+
+# checkin for the first time
+git add . && git commit -S -m 'initial checkin'
 
 echo "TypeScript project '$PROJECT_NAME' initialized with ESM support, ESLint, Prettier, and script commands added successfully"
