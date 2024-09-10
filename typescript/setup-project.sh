@@ -36,35 +36,46 @@ npm init es6 -y
 npm install --save-dev typescript@5.5.4 @types/node
 
 npm pkg set name="$PROJECT_NAME"
-npm pkg set author.email="dummy@gmail.com"
+npm pkg set author.email="author_name@gmail.com"
 npm pkg set author.url="https://github.com/author-id/project-name"
 
 npx tsc --init
 
 # Configure TypeScript for ESM
-echo "{
-  \"compilerOptions\": {
-    \"module\": \"ESNext\",
-    \"target\": \"ESNext\",
-    \"moduleResolution\": \"node\",
-    \"esModuleInterop\": true,
-    \"resolveJsonModule\": true,
-    \"outDir\": \"dist\",
-    \"strictNullChecks\": true,
-  },
-  \"include\": [\"src/**/*\"],
-  \"exclude\": [\"node_modules\", \"dist\"]
-}" > tsconfig.json
+# echo "{
+#   \"compilerOptions\": {
+#     \"module\": \"ESNext\",
+#     \"target\": \"ESNext\",
+#     \"moduleResolution\": \"node\",
+#     \"esModuleInterop\": true,
+#     \"resolveJsonModule\": true,
+#     \"outDir\": \"dist\",
+#     \"strictNullChecks\": true,
+#   },
+#   \"include\": [\"src/**/*\"],
+#   \"exclude\": [\"node_modules\", \"dist\"]
+# }" > tsconfig.json
+cat > tsconfig.json <<- EOM
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ESNext",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "outDir": "dist",
+        "strictNullChecks": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules", "dist"]
+}
+EOM
 
 # Install ESLint, TypeScript ESLint, and Prettier
-# npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin prettier eslint-config-prettier eslint-plugin-prettier
-# npm install --save-dev eslint @eslint/js @types/eslint__js typescript-eslint prettier eslint-config-prettier eslint-plugin-prettier
-# npm install --save-dev eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin prettier eslint-config-prettier eslint-plugin-prettier
 npm install --save-dev eslint typescript-eslint prettier eslint-config-prettier eslint-plugin-prettier
 
 # Initialize ESLint configuration with default values
 # npx eslint --init --use-default
-
 cat > eslint.config.mjs <<- EOM
 // import globals from 'globals';
 import pluginJs from '@eslint/js';
@@ -79,7 +90,7 @@ export default [
     ...tseslint.configs.stylisticTypeChecked,
     {
         files: ['**/*.{js,mjs,cjs,ts}'],
-        ignores: ["dist/**/*", "eslint.config.mjs", 'prettier.config.mjs'],
+        ignores: ['dist/**/*', 'eslint.config.mjs', 'prettier.config.mjs'],
         languageOptions: {
             parserOptions: {
                 project: true,
@@ -96,13 +107,13 @@ echo "console.log('Hello, TypeScript!');" > src/index.ts
 
 # Add script commands to package.json
 cat package.json | jq '.scripts += {
-  "checkin": "git add . && git commit -m 'daily commit' -S && git push",
-  "lint": "eslint \"src/**/*.ts\"",
-  "lint-fix": "eslint --fix \"src/**/*.ts\"",
-  "format": "prettier --write \"**/*.{ts,js,json,css,scss,md}\"",
-  "build": "tsc",
-  "start": "node dist/index.js",
-  "watch": "tsc -w"
+    "checkin": "git add . && git commit -m ''daily commit'' -S && git push",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint-fix": "eslint --fix \"src/**/*.ts\"",
+    "format": "prettier --write \"**/*.{ts,js,mjs,json,css,scss,md}\"",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "watch": "tsc -w"
 }' > temp.json && mv temp.json package.json
 
 # set type to module, not tested
