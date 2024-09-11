@@ -108,7 +108,7 @@ echo "console.log('Hello, TypeScript!');" > src/index.ts
 
 # Add script commands to package.json
 cat package.json | jq '.scripts += {
-    "checkin": "git add . && git commit -m ''daily commit'' -S && git push",
+    "checkin": "git add . && git commit -m \"daily commit\" -S && git push",
     "lint": "eslint \"src/**/*.ts\"",
     "lint-fix": "eslint --fix \"src/**/*.ts\"",
     "format": "prettier --write \"**/*.{ts,js,mjs,json,css,scss,md}\"",
