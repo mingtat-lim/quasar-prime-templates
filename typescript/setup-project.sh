@@ -64,7 +64,8 @@ cat > tsconfig.json <<- EOM
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "outDir": "dist",
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "skipLibCheck": true
     },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist"]
